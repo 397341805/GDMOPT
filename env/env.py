@@ -6,6 +6,7 @@ import numpy as np
 
 class AIGCEnv(gym.Env):
 
+    metadata = {"render_modes": ["human"], "render_fps": 30}
     def __init__(self):
 
         self._flag = 0

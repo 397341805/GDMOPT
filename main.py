@@ -11,7 +11,8 @@ from tianshou.utils import TensorboardLogger
 from tianshou.trainer import offpolicy_trainer
 from torch.distributions import Independent, Normal
 from tianshou.exploration import GaussianNoise
-from env import make_aigc_env
+# from env import make_aigc_env
+from env.routeEnv import make_route_env
 from policy import DiffusionOPT
 from diffusion import Diffusion
 from diffusion.model import MLP, DoubleCritic
@@ -28,7 +29,7 @@ def get_args():
     parser.add_argument('--algorithm', type=str, default='diffusion_opt')
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--buffer-size', type=int, default=1e6)#1e6
-    parser.add_argument('-e', '--epoch', type=int, default=1e6)# 1000
+    parser.add_argument('-e', '--epoch', type=int, default=1e3)# 1000
     parser.add_argument('--step-per-epoch', type=int, default=1)# 100
     parser.add_argument('--step-per-collect', type=int, default=1)#1000
     parser.add_argument('-b', '--batch-size', type=int, default=512)
@@ -76,7 +77,7 @@ def get_args():
 
 def main(args=get_args()):
     # create environments
-    env, train_envs, test_envs = make_aigc_env(args.training_num, args.test_num)
+    env, train_envs, test_envs = make_route_env(args.training_num, args.test_num)
     args.state_shape = env.observation_space.shape[0]
     args.action_shape = env.action_space.n
     args.max_action = 1.
