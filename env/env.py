@@ -65,6 +65,7 @@ class AIGCEnv(gym.Env):
         if self._num_steps >= self._steps_per_episode:
             self._terminated = True
         # Information about number of steps taken
+        # info ={}
         info = {'num_steps': self._num_steps, 'expert_action': expert_action, 'sub_expert_action': sub_expert_action}
         return self._laststate, reward, self._terminated, info
 
